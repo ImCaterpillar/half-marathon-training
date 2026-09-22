@@ -1,0 +1,19 @@
+{
+  "name": "半程马拉松训练管理",
+  "short_name": "半马训练",
+  "description": "个人专属半程马拉松国家三级运动员训练管理系统",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "今日训练", "short_name": "今日", "url": "/dashboard" },
+    { "name": "周计划", "short_name": "计划", "url": "/week" },
+    { "name": "打卡统计", "short_name": "统计", "url": "/stats" }
+  ]
+}

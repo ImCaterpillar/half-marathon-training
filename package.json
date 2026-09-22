@@ -1,0 +1,52 @@
+{
+  "name": "half-marathon-training-manager",
+  "version": "0.5.1-checkpoint.5-plan",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "seed": "tsx scripts/seed.ts",
+    "access:hash": "tsx scripts/hash-access-code.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "setup": "node scripts/run-local.mjs",
+    "run:local": "node scripts/run-local.mjs"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.3",
+    "@supabase/supabase-js": "^2.75.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "autoprefixer": "^10.4.21",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.548.0",
+    "next": "^15.5.5",
+    "postcss": "^8.5.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "zod": "^4.1.12",
+    "dotenv": "^17.2.3",
+    "server-only": "^0.0.1",
+    "recharts": "^3.2.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^24.8.1",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "eslint": "^9.37.0",
+    "eslint-config-next": "^15.5.5",
+    "jsdom": "^27.0.0",
+    "vitest": "^3.2.4",
+    "@playwright/test": "^1.48.2"
+  }
+}
