@@ -15,7 +15,7 @@ async function getId(context?: unknown) {
 export const PUT = withApiAuth(async (request: NextRequest, context?: unknown) => {
   const id = await getId(context);
   const input = phaseUpdateSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
 
   const { data: before, error: beforeError } = await supabase.from("training_phases").select("*").eq("id", id).maybeSingle();
   if (beforeError) throw new Error(`读取修改前阶段失败: ${beforeError.message}`);
@@ -40,7 +40,7 @@ export const PUT = withApiAuth(async (request: NextRequest, context?: unknown) =
 
 export const DELETE = withApiAuth(async (_request: NextRequest, context?: unknown) => {
   const id = await getId(context);
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
 
   const { data: before, error: beforeError } = await supabase.from("training_phases").select("*").eq("id", id).maybeSingle();
   if (beforeError) throw new Error(`读取删除前阶段失败: ${beforeError.message}`);

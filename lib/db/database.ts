@@ -34,6 +34,7 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["profile"]["Row"]> & Pick<Database["public"]["Tables"]["profile"]["Row"], "name" | "sex" | "age" | "height_cm" | "current_weight_kg" | "target_weight_min_kg" | "target_weight_max_kg" | "current_pb_text" | "current_pb_seconds" | "goal_time_text" | "goal_time_seconds" | "goal_pace_text" | "goal_pace_seconds_per_km" | "location" | "max_training_days">;
         Update: Partial<Database["public"]["Tables"]["profile"]["Row"]>;
+        Relationships: [];
       };
       training_phases: {
         Row: {
@@ -53,6 +54,7 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["training_phases"]["Row"]> & Pick<Database["public"]["Tables"]["training_phases"]["Row"], "phase_name" | "start_date" | "end_date" | "goal" | "weekly_mileage_min" | "weekly_mileage_max" | "training_days">;
         Update: Partial<Database["public"]["Tables"]["training_phases"]["Row"]>;
+        Relationships: [];
       };
       workouts: {
         Row: {
@@ -79,6 +81,7 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["workouts"]["Row"]> & Pick<Database["public"]["Tables"]["workouts"]["Row"], "date" | "week_number" | "workout_type" | "title">;
         Update: Partial<Database["public"]["Tables"]["workouts"]["Row"]>;
+        Relationships: [];
       };
       workout_logs: {
         Row: {
@@ -103,6 +106,15 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["workout_logs"]["Row"]> & Pick<Database["public"]["Tables"]["workout_logs"]["Row"], "workout_id" | "date" | "actual_distance_km" | "actual_duration_seconds">;
         Update: Partial<Database["public"]["Tables"]["workout_logs"]["Row"]>;
+        Relationships: [
+          {
+            foreignKeyName: "workout_logs_workout_id_fkey";
+            columns: ["workout_id"];
+            isOneToOne: false;
+            referencedRelation: "workouts";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       test_results: {
         Row: {
@@ -126,6 +138,7 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["test_results"]["Row"]> & Pick<Database["public"]["Tables"]["test_results"]["Row"], "test_date" | "test_type" | "distance_km" | "result_time_text" | "result_time_seconds" | "avg_pace_text" | "avg_pace_seconds_per_km">;
         Update: Partial<Database["public"]["Tables"]["test_results"]["Row"]>;
+        Relationships: [];
       };
       body_metrics: {
         Row: {
@@ -145,6 +158,7 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["body_metrics"]["Row"]> & Pick<Database["public"]["Tables"]["body_metrics"]["Row"], "date" | "weight_kg">;
         Update: Partial<Database["public"]["Tables"]["body_metrics"]["Row"]>;
+        Relationships: [];
       };
       plan_versions: {
         Row: {
@@ -161,6 +175,7 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["plan_versions"]["Row"]> & Pick<Database["public"]["Tables"]["plan_versions"]["Row"], "version_name" | "change_type" | "target_table" | "before_data" | "after_data" | "created_by">;
         Update: Partial<Database["public"]["Tables"]["plan_versions"]["Row"]>;
+        Relationships: [];
       };
       ai_suggestions: {
         Row: {
@@ -177,6 +192,7 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["ai_suggestions"]["Row"]> & Pick<Database["public"]["Tables"]["ai_suggestions"]["Row"], "suggestion_type" | "suggestion_text">;
         Update: Partial<Database["public"]["Tables"]["ai_suggestions"]["Row"]>;
+        Relationships: [];
       };
       reminders: {
         Row: {
@@ -190,6 +206,7 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["reminders"]["Row"]> & Pick<Database["public"]["Tables"]["reminders"]["Row"], "reminder_type" | "message">;
         Update: Partial<Database["public"]["Tables"]["reminders"]["Row"]>;
+        Relationships: [];
       };
       app_settings: {
         Row: {
@@ -205,6 +222,7 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["app_settings"]["Row"]>;
         Update: Partial<Database["public"]["Tables"]["app_settings"]["Row"]>;
+        Relationships: [];
       };
       audit_logs: {
         Row: {
@@ -221,6 +239,7 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["audit_logs"]["Row"]> & Pick<Database["public"]["Tables"]["audit_logs"]["Row"], "action_type" | "target_table" | "source">;
         Update: Partial<Database["public"]["Tables"]["audit_logs"]["Row"]>;
+        Relationships: [];
       };
       error_logs: {
         Row: {
@@ -235,6 +254,7 @@ export type Database = {
         };
         Insert: Partial<Database["public"]["Tables"]["error_logs"]["Row"]> & Pick<Database["public"]["Tables"]["error_logs"]["Row"], "error_type" | "message">;
         Update: Partial<Database["public"]["Tables"]["error_logs"]["Row"]>;
+        Relationships: [];
       };
     };
     Views: Record<string, never>;

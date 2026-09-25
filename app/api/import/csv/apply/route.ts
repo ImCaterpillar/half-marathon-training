@@ -10,7 +10,7 @@ export const POST = withApiAuth(async (request: NextRequest) => {
   const rows = input.rows.map((row) =>
     workoutCreateSchema.omit({ completed: true, skipped: true }).parse({ ...row, planned_pace_seconds_per_km: undefined })
   );
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase.rpc("apply_workout_csv_import", {
     p_rows: rows,
     p_change_reason: input.change_reason ?? "Apply workout CSV import",

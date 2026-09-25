@@ -43,7 +43,7 @@ export async function fetchAITrainingContext(today = getTodayDateInTimezone()) {
 
   const { data: previousWeekLogs, error: previousWeekError } = await supabase
     .from("workout_logs")
-    .select("*, workouts(title,workout_type,planned_rpe,planned_distance_km)")
+    .select("*, workouts(id,title,workout_type,planned_rpe,planned_distance_km)")
     .gte("date", previousWeekStart)
     .lte("date", previousWeekEnd);
   if (previousWeekError) throw new Error(`读取上周训练日志失败: ${previousWeekError.message}`);

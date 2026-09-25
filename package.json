@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "seed": "tsx scripts/seed.ts",
     "access:hash": "tsx scripts/hash-access-code.ts",
     "test": "vitest run",
@@ -39,6 +40,7 @@
     "recharts": "^3.2.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.0.0",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^24.8.1",
     "@types/react": "^19.1.13",

@@ -16,7 +16,7 @@ export const POST = withApiAuth(async (request: NextRequest) => {
     const context = await fetchAITrainingContext();
     const rawPlan = await callAI({ task: "generate-plan", prompt: buildGeneratePlanPrompt(context), schema: generatedPlanSchema });
     const plan = enforceWeeklyPlanPreferences(rawPlan, context.training_preferences, context.ranges.next_week.start);
-    const supabase = getSupabaseAdmin() as any;
+    const supabase = getSupabaseAdmin();
     const { data, error } = await supabase.from("ai_suggestions").insert({
       suggestion_type: "generate-plan",
       input_summary: JSON.stringify({

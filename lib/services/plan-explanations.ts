@@ -71,7 +71,7 @@ function attachSuggestionText(summary: PlanVersionSummary, suggestions: Map<stri
 }
 
 export async function buildWorkoutExplanation(workout: WorkoutWithLog): Promise<WorkoutExplanation> {
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
 
   const [versionResult, auditResult] = await Promise.all([
     supabase.from("plan_versions").select("*").order("created_at", { ascending: false }).limit(30),
@@ -121,7 +121,7 @@ export async function buildWorkoutExplanation(workout: WorkoutWithLog): Promise<
 }
 
 export async function fetchRecentPlanTimeline(limit = 8): Promise<PlanVersionSummary[]> {
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase.from("plan_versions").select("*").order("created_at", { ascending: false }).limit(limit);
 
   if (error) throw new Error(`Failed to load plan timeline: ${error.message}`);

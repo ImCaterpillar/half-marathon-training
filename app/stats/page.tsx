@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import {
   Activity,
   Gauge,
-  Moon,
   RotateCcw,
   Target,
 } from "lucide-react";

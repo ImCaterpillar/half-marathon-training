@@ -95,7 +95,8 @@ async function verifySupabaseConnection() {
 
 async function upsertOrThrow(table: string, payload: unknown, onConflict?: string) {
   const { error } = await withRetry(`${table} upsert`, async () => {
-    const query = supabase.from(table).upsert(payload as any, onConflict ? { onConflict } : undefined);
+    // 表名在运行期决定，无法在编译期收敛为单一表类型；upsert 的入参在此按调用方约定处理
+    const query = supabase.from(table).upsert(payload as never, onConflict ? { onConflict } : undefined);
     return query;
   });
   if (error) throw new Error(`${table} upsert failed: ${error.message}`);

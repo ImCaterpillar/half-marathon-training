@@ -14,7 +14,7 @@ export const POST = withApiAuth(async (request: NextRequest) => {
   try {
     const context = await fetchAITrainingContext();
     const analysis = await callAI({ task: "risk-analysis", prompt: buildRiskAnalysisPrompt(context), schema: riskAnalysisSchema });
-    const supabase = getSupabaseAdmin() as any;
+    const supabase = getSupabaseAdmin();
     const { data, error } = await supabase.from("ai_suggestions").insert({
       suggestion_type: "risk-analysis",
       input_summary: JSON.stringify({

@@ -20,7 +20,6 @@ import type {
   WeeklySummary,
   Workout,
   WorkoutLog,
-  WorkoutSummary,
   WorkoutWithLog,
 } from "@/lib/types/training";
 import { evaluateTrainingRisk } from "@/lib/risk";
@@ -62,15 +61,6 @@ function normalizeWorkout(row: WorkoutRow): Workout {
   };
 }
 
-function normalizeWorkoutSummary(row: WorkoutRow): WorkoutSummary {
-  return {
-    id: row.id,
-    title: row.title,
-    planned_rpe: row.planned_rpe === null ? null : toNumber(row.planned_rpe),
-    planned_distance_km: toNumber(row.planned_distance_km),
-    workout_type: row.workout_type,
-  };
-}
 
 type WorkoutLogJoinedRow = WorkoutLogRow & {
   workouts?: Pick<WorkoutRow, "id" | "title" | "planned_rpe" | "planned_distance_km" | "workout_type"> | null;
@@ -373,7 +363,7 @@ export function buildRecentPlanAdjustmentSummary(versions: PlanVersionSummary[])
 }
 
 export async function fetchProfile() {
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase.from("profile").select("*").limit(1).maybeSingle();
   if (error) throw new Error(`读取个人资料失败: ${error.message}`);
   if (!data) return null;
@@ -381,14 +371,14 @@ export async function fetchProfile() {
 }
 
 export async function fetchAppSettings() {
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase.from("app_settings").select("*").limit(1).maybeSingle();
   if (error) throw new Error(`读取应用设置失败: ${error.message}`);
   return data ? normalizeAppSettings(data) : null;
 }
 
 export async function fetchCurrentPhase(today = getTodayDateInTimezone()) {
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
     .from("training_phases")
     .select("*")
@@ -412,7 +402,7 @@ export async function fetchCurrentPhase(today = getTodayDateInTimezone()) {
 }
 
 export async function fetchWorkoutsWithLogs(start: string, end: string) {
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data: workouts, error: workoutError } = await supabase
     .from("workouts")
     .select("*")
@@ -442,7 +432,7 @@ export async function fetchWorkoutsWithLogs(start: string, end: string) {
 }
 
 export async function fetchLogs(start: string, end: string) {
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
     .from("workout_logs")
     .select("*, workouts(id,title,planned_rpe,planned_distance_km,workout_type)")
@@ -473,7 +463,7 @@ function buildGoalSummary(profile: Profile | null, today: string): GoalSummary {
 }
 
 export async function fetchDashboardData(today = getTodayDateInTimezone()): Promise<DashboardData> {
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const weekStart = startOfWeekMonday(today);
   const weekEnd = endOfWeekSunday(today);
   const previousWeekStart = addDays(weekStart, -7);

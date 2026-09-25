@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { formatDuration, formatPace, secondsToGoalGapText } from "@/lib/format";
+import type { DbTable } from "@/lib/db/database";
 
 const goalSeconds = 4890;
 const goalPaceSeconds = 232;
@@ -52,7 +53,7 @@ const defaultForm = {
   notes: "",
 };
 
-type TestResult = any;
+type TestResult = DbTable<"test_results">;
 
 export default function TestsPage() {
   const [tests, setTests] = useState<TestResult[]>([]);

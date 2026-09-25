@@ -12,7 +12,7 @@ export const POST = withApiAuth(async (request: NextRequest) => {
     return fail("INVALID_STRUCTURED_EXPORT", "Structured workout export validation failed.", 422, parsed.errors);
   }
 
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase.rpc("apply_workout_csv_import", {
     p_rows: parsed.rows,
     p_change_reason: "Apply structured workout export import",

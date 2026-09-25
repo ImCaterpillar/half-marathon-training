@@ -15,7 +15,7 @@ export const GET = withApiAuth(async () => ok(await fetchSettings()));
 
 export const PUT = withApiAuth(async (request: NextRequest) => {
   const input = settingsUpdateSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const before = await fetchSettings();
 
   if (!before.profile) {

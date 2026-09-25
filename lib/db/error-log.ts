@@ -37,7 +37,7 @@ export async function logServerError(params: {
   payload?: unknown;
 }) {
   try {
-    const supabase = getSupabaseAdmin() as any;
+    const supabase = getSupabaseAdmin();
     const entry: DbInsert<"error_logs"> = {
       error_type: params.errorType,
       message: String(sanitize(params.message)),

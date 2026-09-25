@@ -7,13 +7,13 @@ import { toNumber } from "@/lib/format";
 
 export const GET = withApiAuth(async (request: NextRequest) => {
   const query = rangeQuerySchema.parse(Object.fromEntries(request.nextUrl.searchParams));
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   let builder = supabase.from("body_metrics").select("*").order("date", { ascending: false }).limit(query.limit ?? 120);
   if (query.start) builder = builder.gte("date", query.start);
   if (query.end) builder = builder.lte("date", query.end);
   const { data, error } = await builder;
   if (error) throw new Error(`读取体重恢复记录失败: ${error.message}`);
-  const normalized = ((data ?? []) as any[]).map((row) => ({
+  const normalized = (data ?? []).map((row) => ({
     ...row,
     weight_kg: toNumber(row.weight_kg),
     sleep_hours: row.sleep_hours == null ? null : toNumber(row.sleep_hours),
@@ -27,7 +27,7 @@ export const GET = withApiAuth(async (request: NextRequest) => {
 
 export const POST = withApiAuth(async (request: NextRequest) => {
   const input = bodyMetricSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase.from("body_metrics").insert(input).select("*").single();
   if (error) throw new Error(`保存体重恢复记录失败: ${error.message}`);
   await supabase.from("profile").update({ current_weight_kg: input.weight_kg }).neq("id", "00000000-0000-0000-0000-000000000000");

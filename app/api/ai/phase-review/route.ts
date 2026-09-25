@@ -14,7 +14,7 @@ export const POST = withApiAuth(async (request: NextRequest) => {
   try {
     const context = await fetchAITrainingContext();
     const review = await callAI({ task: "phase-review", prompt: buildPhaseReviewPrompt(context), schema: phaseReviewSchema });
-    const supabase = getSupabaseAdmin() as any;
+    const supabase = getSupabaseAdmin();
     const { data, error } = await supabase.from("ai_suggestions").insert({
       suggestion_type: "phase-review",
       input_summary: JSON.stringify({

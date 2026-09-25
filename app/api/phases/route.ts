@@ -6,7 +6,7 @@ import { getSupabaseAdmin } from "@/lib/db/supabase";
 import { phaseSchema } from "@/lib/validation/advanced";
 
 export const GET = withApiAuth(async () => {
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
     .from("training_phases")
     .select("*")
@@ -18,7 +18,7 @@ export const GET = withApiAuth(async () => {
 
 export const POST = withApiAuth(async (request: NextRequest) => {
   const input = phaseSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase.from("training_phases").insert(input).select("*").single();
   if (error) throw new Error(`新增训练阶段失败: ${error.message}`);
 

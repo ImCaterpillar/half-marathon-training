@@ -9,7 +9,7 @@ import { workoutLogSchema } from "@/lib/validation/workouts";
 
 export const POST = withApiAuth(async (request: NextRequest) => {
   const input = resolveOfflineConflictSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
 
   const { data: workout, error: workoutError } = await supabase.from("workouts").select("*").eq("id", input.workoutId).maybeSingle();
   if (workoutError) throw new Error(`读取训练失败: ${workoutError.message}`);

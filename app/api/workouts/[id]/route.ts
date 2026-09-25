@@ -16,7 +16,7 @@ async function getId(context?: unknown) {
 
 export const GET = withApiAuth(async (_request: NextRequest, context?: unknown) => {
   const id = await getId(context);
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data: workout, error } = await supabase.from("workouts").select("date").eq("id", id).maybeSingle();
   if (error) throw new Error(`Failed to load workout date: ${error.message}`);
   if (!workout) return fail("NOT_FOUND", "Workout not found.", 404);
@@ -32,7 +32,7 @@ export const GET = withApiAuth(async (_request: NextRequest, context?: unknown) 
 export const PUT = withApiAuth(async (request: NextRequest, context?: unknown) => {
   const id = await getId(context);
   const input = workoutUpdateSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data: before, error: beforeError } = await supabase.from("workouts").select("*").eq("id", id).maybeSingle();
   if (beforeError) throw new Error(`Failed to load workout before update: ${beforeError.message}`);
   if (!before) return fail("NOT_FOUND", "Workout not found.", 404);
@@ -56,7 +56,7 @@ export const PUT = withApiAuth(async (request: NextRequest, context?: unknown) =
 
 export const DELETE = withApiAuth(async (_request: NextRequest, context?: unknown) => {
   const id = await getId(context);
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data: before, error: beforeError } = await supabase.from("workouts").select("*").eq("id", id).maybeSingle();
   if (beforeError) throw new Error(`Failed to load workout before delete: ${beforeError.message}`);
   if (!before) return fail("NOT_FOUND", "Workout not found.", 404);

@@ -13,7 +13,7 @@ export const GET = withApiAuth(async () => {
 
 export const PUT = withApiAuth(async (request: NextRequest) => {
   const input = profileUpdateSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data: before } = await supabase.from("profile").select("*").limit(1).maybeSingle();
 
   if (!before) {

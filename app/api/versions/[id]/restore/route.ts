@@ -13,7 +13,7 @@ async function getId(context?: unknown) {
 export const POST = withApiAuth(async (request: NextRequest, context?: unknown) => {
   const id = await getId(context);
   const input = restoreVersionSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase.rpc("restore_plan_version", {
     p_version_id: id,
     p_change_reason: input.change_reason ?? "用户确认恢复历史版本",

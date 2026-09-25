@@ -29,7 +29,7 @@ export const POST = withApiAuth(async (request: NextRequest) => {
       },
     }, context.training_preferences, context.today);
 
-    const supabase = getSupabaseAdmin() as any;
+    const supabase = getSupabaseAdmin();
     const { data, error } = await supabase
       .from("ai_suggestions")
       .insert({

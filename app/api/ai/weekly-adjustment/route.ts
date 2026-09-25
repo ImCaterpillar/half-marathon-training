@@ -26,7 +26,7 @@ export const POST = withApiAuth(async (request: NextRequest) => {
       context.ranges.next_week.start
     );
 
-    const supabase = getSupabaseAdmin() as any;
+    const supabase = getSupabaseAdmin();
     const { data, error } = await supabase
       .from("ai_suggestions")
       .insert({

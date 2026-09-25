@@ -1,5 +1,8 @@
 # 半程马拉松国家三级运动员训练管理网站
 
+[![CI](https://github.com/ImCaterpillar/half-marathon-training/actions/workflows/ci.yml/badge.svg)](https://github.com/ImCaterpillar/half-marathon-training/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 当前交付：**Checkpoint 5：移动端、PWA、部署与基础自动化测试**。
 
 这是姚俊豪个人专属的单用户训练管理 Web App，目标是冲击男子半程马拉松国家三级运动员成绩 **1:21:30**。系统坚持真实数据库、真实打卡、真实统计、真实 AI 建议、版本备份与恢复闭环；浏览器端不直接访问 Supabase，不暴露 Service Role Key 或 AI Key。
@@ -155,35 +158,30 @@ supabase/migrations/0003_advanced_management.sql
 
 ### Windows 一键运行（推荐）
 
-如果 PowerShell 提示 `.ps1` 未签名，请直接使用 CMD 或双击运行：
+Windows 下推荐直接用包管理器脚本启动，不依赖任何 `.bat` / `.cmd` 包装文件：
 
-```bat
-run-local.bat
+```powershell
+pnpm run setup
 ```
 
-也可以在命令提示符中运行：
+它等价于 `node scripts/run-local.mjs`，也就是 `run-local.ps1` / `run-local.sh` 内部调用的同一个入口，
+因此在 PowerShell、CMD、Git Bash 里都能用，也不会碰到 CMD 把 UTF-8 BOM 识别成 `锘緻echo` 的问题。
 
-```bat
-cd /d D:\桌面\项目\half-marathon-training-cp5
-run-local.bat
-```
-
-常用参数：
-
-```bat
-run-local.bat --no-install
-run-local.bat --no-seed
-run-local.bat --no-dev
-run-local.bat --replace-plan
-```
-
-如果一定要运行 PowerShell 版本，可临时绕过当前进程的执行策略：
+也可以直接运行 PowerShell 脚本（若被执行策略拦截，先临时放开当前进程）：
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\run-local.ps1
 ```
 
+参数需要透传时统一写成 `pnpm run setup -- <参数>`：
+
+```powershell
+pnpm run setup -- --no-install
+pnpm run setup -- --no-seed
+pnpm run setup -- --no-dev
+pnpm run setup -- --replace-plan
+```
 
 ```bash
 pnpm install
@@ -346,12 +344,13 @@ having count(*) > 1;
 
 ## 测试
 
-Vitest：
+Vitest 单元测试（`tests/**/*.test.ts`）：
 
 ```bash
-pnpm test
+pnpm test        # vitest run，单次执行
+pnpm typecheck   # tsc --noEmit，类型检查
+pnpm lint        # eslint .
 ```
-
 Playwright：
 
 ```bash
@@ -416,14 +415,16 @@ E2E 测试需要先启动本地服务，并在测试环境中配置可用的 Sup
 - 访问 Cookie 使用 HttpOnly、Secure、SameSite=Lax。
 - 离线 IndexedDB 只保存 pending logs 和最近计划缓存，不作为主数据库。
 
-### Windows CMD 一键运行
+### Windows 命令行运行（无脚本文件）
 
-如果 PowerShell 提示 `.ps1 未签名`，请不要运行 `run-local.ps1`，改用 CMD：
+仓库只保留两个入口脚本：`run-local.sh`（macOS / Linux）与 `run-local.ps1`（Windows PowerShell），
+两者都只是 `node scripts/run-local.mjs` 的薄包装。原先并列的 `run-local.bat` / `run-local.cmd`
+内容与彼此几乎完全重复，已删除，Windows 下统一改用包管理器脚本：
 
 ```bat
-cd /d D:\桌面\项目\half-marathon-training-cp5
-run-local.bat
+pnpm run setup
 ```
 
-`run-local.bat` 使用纯 ASCII 编码，避免 Windows CMD 把 UTF-8 BOM 识别成 `锘緻echo`。
+这样无需依赖额外的 `.bat` / `.cmd` 文件，也不会碰到 `.ps1` 执行策略或 CMD 的 UTF-8 BOM 问题。
+
 第一次运行时必须粘贴真实的 Supabase Project URL 和 Service Role Key，不能直接回车保留 `.env.example` 里的占位值。

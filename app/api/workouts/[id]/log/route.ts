@@ -16,7 +16,7 @@ async function getId(context?: unknown) {
 export const POST = withApiAuth(async (request: NextRequest, context?: unknown) => {
   const workoutId = await getId(context);
   const input = workoutLogSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
 
   const { data: workout, error: workoutError } = await supabase.from("workouts").select("*").eq("id", workoutId).maybeSingle();
   if (workoutError) throw new Error(`读取训练失败: ${workoutError.message}`);

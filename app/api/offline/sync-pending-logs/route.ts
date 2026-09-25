@@ -9,7 +9,7 @@ import { workoutLogSchema } from "@/lib/validation/workouts";
 
 export const POST = withApiAuth(async (request: NextRequest) => {
   const input = syncPendingLogsSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const syncedLocalIds: string[] = [];
   const conflicts: unknown[] = [];
   const failed: Array<{ localId: string; reason: string }> = [];

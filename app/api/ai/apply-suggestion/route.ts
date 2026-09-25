@@ -5,6 +5,7 @@ import { fail, ok } from "@/lib/api/response";
 import { enforceAIRateLimit } from "@/lib/ai/route-helpers";
 import { withApiAuth } from "@/lib/auth/api-auth";
 import { getSupabaseAdmin } from "@/lib/db/supabase";
+import type { Json } from "@/lib/db/database";
 import { fetchAITrainingContext } from "@/lib/services/ai-context";
 import { enforceDailyAdvicePreferences, enforceWeeklyPlanPreferences } from "@/lib/services/plan-constraints";
 import type { ExecutionQualitySummary } from "@/lib/types/training";
@@ -14,7 +15,7 @@ type SuggestionRecord = {
   id: string;
   suggestion_type: string;
   applied: boolean;
-  structured_plan: unknown;
+  structured_plan: Json;
 };
 
 function buildExecutionQualityReason(executionQuality: ExecutionQualitySummary) {
@@ -70,7 +71,7 @@ export const POST = withApiAuth(async (request: NextRequest) => {
   if (limited) return limited;
 
   const input = applySuggestionSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
 
   const { data: suggestion, error: readError } = await supabase
     .from("ai_suggestions")

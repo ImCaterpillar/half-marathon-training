@@ -47,7 +47,7 @@ function mapToSeries(map: Map<string, number>, valueKey: string) {
 }
 
 export const GET = withApiAuth(async (_request: NextRequest) => {
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const today = getTodayDateInTimezone();
   const start = addDays(today, -180);
 

@@ -3,11 +3,6 @@ import { z } from "zod";
 const dateString = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "日期格式必须为 YYYY-MM-DD");
 const optionalText = z.string().trim().max(4000).optional().nullable().transform((value) => value === "" ? null : value ?? null);
 const optionalShortText = z.string().trim().max(200).optional().nullable().transform((value) => value === "" ? null : value ?? null);
-const numericStringOrNumber = z.union([z.number(), z.string().trim()]).transform((value) => {
-  if (value === "") return undefined;
-  const number = Number(value);
-  return Number.isFinite(number) ? number : Number.NaN;
-});
 
 export const workoutCreateSchema = z.object({
   date: dateString,

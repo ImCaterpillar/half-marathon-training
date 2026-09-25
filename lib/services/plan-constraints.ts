@@ -1,7 +1,7 @@
 import type { AIWorkout, DailyAdvice, WeeklyAdjustment } from "@/lib/ai/schemas";
 import { round1 } from "@/lib/format";
 import type { TrainingDay, TrainingPreferences } from "@/lib/types/training";
-import { addDays, parseDateOnly, startOfWeekMonday } from "@/lib/time";
+import { addDays, parseDateOnly } from "@/lib/time";
 
 const weekdayIndex: Record<TrainingDay, number> = {
   monday: 0,

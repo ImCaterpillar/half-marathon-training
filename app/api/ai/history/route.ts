@@ -84,7 +84,7 @@ function toHistoryItem(row: SuggestionRow, relatedVersions: PlanVersionSummary[]
 }
 
 export const GET = withApiAuth(async (_request: NextRequest) => {
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const [{ data: suggestionRows, error: suggestionError }, { data: versionRows, error: versionError }] = await Promise.all([
     supabase.from("ai_suggestions").select("*").order("created_at", { ascending: false }).limit(30),
     supabase.from("plan_versions").select("*").order("created_at", { ascending: false }).limit(100),

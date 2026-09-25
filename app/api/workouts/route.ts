@@ -26,7 +26,7 @@ export const GET = withApiAuth(async (request: NextRequest) => {
 
 export const POST = withApiAuth(async (request: NextRequest) => {
   const input = workoutCreateSchema.parse(await request.json());
-  const supabase = getSupabaseAdmin() as any;
+  const supabase = getSupabaseAdmin();
   const { data, error } = await supabase.from("workouts").insert(input).select("*").single();
   if (error) throw new Error(`创建训练失败: ${error.message}`);
 

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import type { DbTable } from "@/lib/db/database";
 
 function defaultRecoveryScore(sleep: string, fatigue: string, pain: string) {
   const sleepHours = Number(sleep || 0);
@@ -39,7 +40,7 @@ const defaultForm = {
   notes: "",
 };
 
-type Metric = any;
+type Metric = DbTable<"body_metrics">;
 
 export default function BodyPage() {
   const [metrics, setMetrics] = useState<Metric[]>([]);
@@ -162,7 +163,7 @@ export default function BodyPage() {
   );
 }
 
-function ChartCard({ title, data, dataKey, unit }: { title: string; data: any[]; dataKey: string; unit: string }) {
+function ChartCard({ title, data, dataKey, unit }: { title: string; data: unknown[]; dataKey: string; unit: string }) {
   return (
     <Card>
       <CardHeader><CardTitle>{title}</CardTitle><CardDescription>单位：{unit}</CardDescription></CardHeader>
